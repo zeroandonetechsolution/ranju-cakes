@@ -91,7 +91,15 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             bookingModal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            document.body.style.overflow = 'hidden';
+
+            // Pre-select cake if clicked from menu
+            const cakeName = btn.dataset.cake;
+            if (cakeName) {
+                const card = Array.from(document.querySelectorAll('#flavorSelect .select-card'))
+                    .find(c => c.querySelector('h4').textContent.includes(cakeName));
+                if (card) card.click();
+            }
         });
     });
 
@@ -228,19 +236,70 @@ document.addEventListener('DOMContentLoaded', () => {
         summaryList.innerHTML = html;
     });
 
-    // Fake Payment Processor
-    document.querySelector('.pay-now-btn').addEventListener('click', function() {
-        const btn = this;
-        const originalText = btn.innerHTML;
-        btn.innerHTML = 'Processing... ⏳';
-        btn.disabled = true;
-        
+    // WhatsApp Integration & Order Saving
+    document.getElementById('confirmOrderBtn').addEventListener('click', function() {
+        const name = document.getElementById('custName').value;
+        const phone = document.getElementById('custPhone').value;
+        const date = document.getElementById('custDate').value;
+        const qty = document.getElementById('custQty').value || 1;
+        const address = document.getElementById('custAddress').value;
+        const message = document.getElementById('customMessage').value;
+
+        if(!name || !phone || !date) {
+            alert("Please fill in your name, phone, and delivery date.");
+            goToStep(3);
+            return;
+        }
+
+        const totalObj = calculateTotal();
+        const addons = Array.from(document.querySelectorAll('input[name="decor"]:checked'))
+            .map(cb => cb.parentElement.textContent.trim().split(' (+')[0])
+            .join(', ');
+
+        const orderData = {
+            id: Math.floor(100000 + Math.random() * 900000),
+            name,
+            phone,
+            cake: `${sizeName} ${baseName}`,
+            qty,
+            addons: addons || 'None',
+            date,
+            address,
+            message: message || 'None',
+            total: totalObj.formattedTotal,
+            timestamp: new Date().toISOString()
+        };
+
+        // Save to LocalStorage (Admin usage)
+        const orders = JSON.parse(localStorage.getItem('ranju_orders') || '[]');
+        orders.push(orderData);
+        localStorage.setItem('ranju_orders', JSON.stringify(orders));
+
+        // Show Toast
+        const toast = document.getElementById('successToast');
+        toast.classList.add('show');
+
+        // Redirect to WhatsApp after brief delay
         setTimeout(() => {
-            // Success
-            document.getElementById('randomOrderId').textContent = Math.floor(100000 + Math.random() * 900000);
+            const waNumber = "918940244626"; // Client WhatsApp
+            const waMessage = `Hello, I want to order:
+*Cake:* ${orderData.cake}
+*Quantity:* ${orderData.qty}
+*Addons:* ${orderData.addons}
+*Total:* ${orderData.total}
+*Date:* ${orderData.date}
+*Name:* ${orderData.name}
+*Phone:* ${orderData.phone}
+*Address:* ${orderData.address}
+*Note:* ${orderData.message}`;
+
+            const encodedMsg = encodeURIComponent(waMessage);
+            window.open(`https://wa.me/${waNumber}?text=${encodedMsg}`, '_blank');
+            
+            // Show success step in modal
+            document.getElementById('randomOrderId').textContent = orderData.id;
             goToStep(5);
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        }, 2000);
+            toast.classList.remove('show');
+        }, 1500);
     });
 });

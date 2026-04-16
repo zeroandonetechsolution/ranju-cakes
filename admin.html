@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Ranju Bakes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #fdfbf7;
+            --color-text: #3e3328;
+            --color-primary: #52796f;
+            --color-surface: #ffffff;
+        }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            margin: 0;
+            padding: 40px 20px;
+        }
+        .admin-header {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        h1 { font-family: 'Playfair Display', serif; }
+        .stats { display: flex; gap: 20px; }
+        .stat-card {
+            background: var(--color-surface);
+            padding: 15px 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .stat-card span { display: block; font-size: 0.8rem; color: #666; }
+        .stat-card strong { font-size: 1.5rem; color: var(--color-primary); }
+
+        .orders-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            background: var(--color-surface);
+            border-collapse: collapse;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        th, td {
+            text-align: left;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+        th { background: var(--color-primary); color: white; font-weight: 500; }
+        tr:hover { background: #fafafa; }
+        .status-badge {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .btn-clear {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-clear:hover { opacity: 0.8; }
+        .empty-state { text-align: center; padding: 100px; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <div>
+            <h1>Orders Dashboard</h1>
+            <p>Recent enquiries from your website</p>
+        </div>
+        <div class="stats">
+            <div class="stat-card">
+                <span>Total Orders</span>
+                <strong id="totalCount">0</strong>
+            </div>
+            <button class="btn-clear" id="clearBtn">Clear History</button>
+        </div>
+    </div>
+
+    <div class="orders-container">
+        <table id="ordersTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Customer</th>
+                    <th>Cake Selection</th>
+                    <th>Qty</th>
+                    <th>Delivery Date</th>
+                    <th>Address</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="ordersBody">
+                <!-- Orders will be injected here -->
+            </tbody>
+        </table>
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <h3>No orders yet.</h3>
+            <p>They will appear here once customers start booking.</p>
+        </div>
+    </div>
+
+    <script>
+        function loadOrders() {
+            const orders = JSON.parse(localStorage.getItem('ranju_orders') || '[]');
+            const body = document.getElementById('ordersBody');
+            const table = document.getElementById('ordersTable');
+            const empty = document.getElementById('emptyState');
+            const totalCount = document.getElementById('totalCount');
+
+            totalCount.textContent = orders.length;
+
+            if (orders.length === 0) {
+                table.style.display = 'none';
+                empty.style.display = 'block';
+                return;
+            }
+
+            table.style.display = 'table';
+            empty.style.display = 'none';
+            body.innerHTML = '';
+
+            orders.reverse().forEach(order => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>#${order.id}</td>
+                    <td>
+                        <strong>${order.name}</strong><br>
+                        <small>${order.phone}</small>
+                    </td>
+                    <td>
+                        ${order.cake}<br>
+                        <small style="color:#666">${order.addons}</small>
+                    </td>
+                    <td>${order.qty || 1}</td>
+                    <td>${order.date}</td>
+                    <td>${order.address}</td>
+                    <td><strong>${order.total}</strong></td>
+                    <td><span class="status-badge">New</span></td>
+                `;
+                body.appendChild(tr);
+            });
+        }
+
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            if(confirm('Are you sure you want to clear all order history?')) {
+                localStorage.removeItem('ranju_orders');
+                loadOrders();
+            }
+        });
+
+        loadOrders();
+    </script>
+</body>
+</html>

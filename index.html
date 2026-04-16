@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ranju Cake Craft - Certified home baker in Tirupur. Artisan, commercial, and health-focused cakes with no fondant.">
-    <title>Ranju Cake Craft | Artisan Home Baker</title>
+    <meta name="description" content="Ranju Bakes - Certified home baker in Tirupur. Artisan, commercial, and health-focused cakes with no fondant.">
+    <title>Ranju Bakes | Artisan Home Baker</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +15,7 @@
     <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">Ranju Cake Craft</a>
+            <a href="#" class="logo">Ranju Bakes</a>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
@@ -74,37 +74,48 @@
         </div>
     </section>
 
-    <!-- Featured Creations Section -->
+    <!-- Simple Cake Menu Section -->
     <section id="creations" class="creations section dark-bg">
         <div class="container">
-            <div class="creations-header">
-                <h2>Signature Creations</h2>
-                <p>A glimpse into our artisanal menu</p>
+            <div class="section-title text-center">
+                <h2>Our Menu</h2>
+                <p>Curated flavors for every sweet moment</p>
             </div>
-            <div class="gallery">
-                <div class="gallery-item">
-                    <div class="image-container">
-                        <img src="assets/images/cake_slice.png" alt="Decadent chocolate cake slice">
-                        <div class="overlay">
-                            <h3>Rustic Chocolate</h3>
-                            <p>Rich, dark, and utterly divine.</p>
-                        </div>
+            <div class="menu-grid">
+                <!-- Cake Card 1 -->
+                <div class="menu-card" data-cake="Rustic Chocolate" data-price="800">
+                    <div class="menu-card-img">
+                        <img src="assets/images/cake_slice.png" alt="Rustic Chocolate Cake">
+                        <span class="price-tag">₹800/kg</span>
+                    </div>
+                    <div class="menu-card-info">
+                        <h3>Rustic Chocolate</h3>
+                        <p>Rich, dark cocoa layers with smooth ganache.</p>
+                        <button class="btn btn-primary open-booking-modal" data-cake="Rustic Chocolate">Order Now</button>
                     </div>
                 </div>
-                <div class="gallery-item">
-                    <div class="image-container">
-                        <img src="assets/images/cupcakes.png" alt="Healthy artisan cupcakes">
-                        <div class="overlay">
-                            <h3>Fresh Cupcakes</h3>
-                            <p>Perfect for any celebration.</p>
-                        </div>
+                <!-- Cake Card 2 -->
+                <div class="menu-card" data-cake="Vanilla Bean" data-price="750">
+                    <div class="menu-card-img">
+                        <img src="assets/images/cupcakes.png" alt="Vanilla Bean Cake">
+                        <span class="price-tag">₹750/kg</span>
+                    </div>
+                    <div class="menu-card-info">
+                        <h3>Vanilla Bean</h3>
+                        <p>Classic Madagascan vanilla with light cream.</p>
+                        <button class="btn btn-primary open-booking-modal" data-cake="Vanilla Bean">Order Now</button>
                     </div>
                 </div>
-                <div class="gallery-item split-text">
-                    <div class="custom-card">
-                        <h3>Custom Orders</h3>
-                        <p>We craft bespoke cakes tailored to your special occasions. Whether it's a birthday, anniversary, or wedding, we bring your vision to life.</p>
-                        <button class="btn btn-outline open-booking-modal">Start Customizing</button>
+                <!-- Cake Card 3 -->
+                <div class="menu-card" data-cake="Red Velvet" data-price="900">
+                    <div class="menu-card-img">
+                        <img src="assets/images/hero.png" alt="Red Velvet Cake">
+                        <span class="price-tag">₹900/kg</span>
+                    </div>
+                    <div class="menu-card-info">
+                        <h3>Red Velvet</h3>
+                        <p>Natural beetroot-infused velvet crumb.</p>
+                        <button class="btn btn-primary open-booking-modal" data-cake="Red Velvet">Order Now</button>
                     </div>
                 </div>
             </div>
@@ -131,12 +142,26 @@
     <footer>
         <div class="container footer-content">
             <div class="footer-brand">
-                <h3>Ranju Cake Craft</h3>
+                <h3>Ranju Bakes</h3>
                 <p>Tirupur • Homemade Artisan Cakes</p>
             </div>
-            <p class="copyright">&copy; <span id="year"></span> Ranju Cake Craft. All rights reserved.</p>
+            <p class="copyright">&copy; <span id="year"></span> Ranju Bakes. All rights reserved.</p>
+            <a href="admin.html" style="font-size: 0.7rem; opacity: 0.5;">Admin Access</a>
         </div>
     </footer>
+
+    <!-- Floating Action Buttons -->
+    <div class="floating-btns">
+        <a href="tel:+918940244626" class="fab fab-call" title="Call Us">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        </a>
+        <a href="https://wa.me/918940244626" target="_blank" class="fab fab-wa" title="WhatsApp Us">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+        </a>
+    </div>
+
+    <!-- Success Toast (Hidden) -->
+    <div id="successToast" class="toast">Order saved and redirecting to WhatsApp...</div>
 
     <!-- Booking Modal -->
     <div class="modal-overlay" id="bookingModal">
@@ -148,7 +173,7 @@
                     <div class="progress-step active" data-step="1">1. Base</div>
                     <div class="progress-step" data-step="2">2. Design</div>
                     <div class="progress-step" data-step="3">3. Details</div>
-                    <div class="progress-step" data-step="4">4. Payment</div>
+                    <div class="progress-step" data-step="4">4. Confirm</div>
                 </div>
             </div>
             <div class="modal-body">
@@ -238,16 +263,22 @@
                     <div class="form-row">
                         <div class="form-group half">
                             <label>Full Name</label>
-                            <input type="text" class="form-control" placeholder="Jane Doe" id="custName">
+                            <input type="text" class="form-control" placeholder="Jane Doe" id="custName" required>
                         </div>
                         <div class="form-group half">
                             <label>Phone Number</label>
-                            <input type="tel" class="form-control" placeholder="+91 98765 43210" id="custPhone">
+                            <input type="tel" class="form-control" placeholder="+91 98765 43210" id="custPhone" required>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Delivery/Pickup Date</label>
-                        <input type="date" class="form-control" id="custDate">
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label>Delivery/Pickup Date</label>
+                            <input type="date" class="form-control" id="custDate" required>
+                        </div>
+                        <div class="form-group half">
+                            <label>Quantity</label>
+                            <input type="number" class="form-control" id="custQty" value="1" min="1">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Delivery Address (Tirupur Only)</label>
@@ -259,48 +290,25 @@
                     </div>
                 </div>
 
-                <!-- Step 4: Payment -->
+                <!-- Step 4: Confirm Order -->
                 <div class="form-step" id="step-4">
-                    <h3>Secure Payment</h3>
-                    <div class="order-summary">
+                    <h3>Confirm Your Selection</h3>
+                    <div class="order-summary modern-summary">
                         <h4>Order Summary</h4>
                         <div id="summaryList"></div>
-                        <div class="summary-total">Total: <span id="finalTotal">₹800</span></div>
+                        <div class="summary-total">Estimated Total: <span id="finalTotal">₹0</span></div>
                     </div>
                     
-                    <div class="payment-methods">
-                        <label class="payment-method active">
-                            <input type="radio" name="payMethod" checked>
-                            <div class="pay-icon">💳</div>
-                            <span>Credit/Debit Card</span>
-                        </label>
-                        <label class="payment-method">
-                            <input type="radio" name="payMethod">
-                            <div class="pay-icon">📱</div>
-                            <span>UPI (GPay, PhonePe)</span>
-                        </label>
-                    </div>
-                    
-                    <div class="card-details">
-                        <div class="form-group">
-                            <label>Card Number</label>
-                            <input type="text" class="form-control" placeholder="0000 0000 0000 0000">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group half">
-                                <label>Expiry</label>
-                                <input type="text" class="form-control" placeholder="MM/YY">
-                            </div>
-                            <div class="form-group half">
-                                <label>CVV</label>
-                                <input type="password" class="form-control" placeholder="123">
-                            </div>
-                        </div>
+                    <div class="whatsapp-notice">
+                        <p>Clicking the button below will open WhatsApp with your order details pre-filled. We'll confirm your order on chat!</p>
                     </div>
 
                     <div class="step-actions split">
                         <button class="btn btn-secondary prev-step">Back</button>
-                        <button class="btn btn-primary pay-now-btn">Pay <span id="payBtnAmount">₹800</span> Securely</button>
+                        <button class="btn btn-primary whatsapp-btn" id="confirmOrderBtn">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="white" stroke-width="2" fill="none" class="icon-inline"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                            Confirm via WhatsApp
+                        </button>
                     </div>
                 </div>
                 
@@ -308,7 +316,7 @@
                 <div class="form-step text-center" id="step-success">
                     <div class="success-icon">✨🎂✨</div>
                     <h3>Order Confirmed!</h3>
-                    <p>Thank you for choosing Ranju Cake Craft.</p>
+                    <p>Thank you for choosing Ranju Bakes.</p>
                     <p class="order-id">Order ID: #<span id="randomOrderId"></span></p>
                     <p class="text-muted mt-3">We will contact you shortly to confirm the design details.</p>
                     <button class="btn btn-primary mt-4 modal-close-btn">Return to Home</button>
