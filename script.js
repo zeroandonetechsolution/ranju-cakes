@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
-            navbar.classList.add('scrolled'); // keep background white initially too or remove? Let's just add shadow.
+            navbar.classList.add('scrolled');
         }
     });
 
@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
         navLinks.classList.toggle('active');
         hamburger.classList.toggle('active');
         
-        // Animate hamburger to X (optional simple animation done via css but we just toggle active class here for potential future css adjustments)
         const spans = hamburger.querySelectorAll('span');
         if(navLinks.classList.contains('active')) {
             spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
@@ -72,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, observerOptions);
 
-    // Apply animation initial state to elements we want to fade in on scroll
     const animateElements = document.querySelectorAll('.value-card, .gallery-item, .section-title, .creations-header');
     
     animateElements.forEach(el => {
@@ -93,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
             bookingModal.classList.add('active');
             document.body.style.overflow = 'hidden';
 
-            // Pre-select cake if clicked from menu
             const cakeName = btn.dataset.cake;
             if (cakeName) {
                 const card = Array.from(document.querySelectorAll('#flavorSelect .select-card'))
@@ -107,7 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             bookingModal.classList.remove('active');
             document.body.style.overflow = '';
-            // Reset to step 1
             setTimeout(() => {
                 goToStep(1);
             }, 300);
@@ -122,8 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function goToStep(step) {
         currentStep = step;
-        
-        // Update Progress Bar
         progressSteps.forEach(p => {
             if (parseInt(p.dataset.step) <= currentStep) {
                 p.classList.add('active');
@@ -132,7 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Update Form Steps
         formSteps.forEach(fs => fs.classList.remove('active'));
         if(document.getElementById(`step-${currentStep}`)) {
             document.getElementById(`step-${currentStep}`).classList.add('active');
@@ -175,17 +168,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const total = (basePrice * sizeMultiplier) + addonPrice;
-        
-        // Update UI
         const formattedTotal = '₹' + total;
         liveTotalValue.textContent = formattedTotal;
         finalTotalValue.textContent = formattedTotal;
-        payBtnAmountValue.textContent = formattedTotal;
+        if (payBtnAmountValue) payBtnAmountValue.textContent = formattedTotal;
         
         return { total, formattedTotal, addonPrice };
     }
 
-    // Single Select Cards (Base Flavor & Size)
     document.querySelectorAll('#flavorSelect .select-card').forEach(card => {
         card.addEventListener('click', function() {
             document.querySelectorAll('#flavorSelect .select-card').forEach(c => c.classList.remove('active'));
@@ -206,12 +196,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Multi-Select Addons
     document.querySelectorAll('input[name="decor"]').forEach(cb => {
         cb.addEventListener('change', calculateTotal);
     });
 
-    // Generate Order Summary on Step 3 -> 4
     document.querySelector('.review-order').addEventListener('click', () => {
         const summaryList = document.getElementById('summaryList');
         let html = `
@@ -270,19 +258,15 @@ document.addEventListener('DOMContentLoaded', () => {
             timestamp: new Date().toISOString()
         };
 
-        // Save to LocalStorage (Admin usage)
         const orders = JSON.parse(localStorage.getItem('ranju_orders') || '[]');
         orders.push(orderData);
         localStorage.setItem('ranju_orders', JSON.stringify(orders));
 
-        // Show Toast
         const toast = document.getElementById('successToast');
-        toast.classList.add('show');
+        if (toast) toast.classList.add('show');
 
-        // Redirect to WhatsApp after brief delay
-        setTimeout(() => {
-            const waNumber = "918940244626"; // Client WhatsApp
-            const waMessage = `Hello, I want to order:
+        const waNumber = "918940244626";
+        const waMessage = `Hello, I want to order:
 *Cake:* ${orderData.cake}
 *Quantity:* ${orderData.qty}
 *Addons:* ${orderData.addons}
@@ -293,13 +277,17 @@ document.addEventListener('DOMContentLoaded', () => {
 *Address:* ${orderData.address}
 *Note:* ${orderData.message}`;
 
-            const encodedMsg = encodeURIComponent(waMessage);
-            window.open(`https://wa.me/${waNumber}?text=${encodedMsg}`, '_blank');
-            
-            // Show success step in modal
-            document.getElementById('randomOrderId').textContent = orderData.id;
-            goToStep(5);
-            toast.classList.remove('show');
-        }, 1500);
+        const encodedMsg = encodeURIComponent(waMessage);
+        
+        // Use window.location.href for maximum reliability on mobile and to avoid popup blockers
+        const waUrl = `https://wa.me/${waNumber}?text=${encodedMsg}`;
+        
+        // Still show success in modal
+        document.getElementById('randomOrderId').textContent = orderData.id;
+        goToStep(5);
+        if (toast) setTimeout(() => toast.classList.remove('show'), 3000);
+
+        // Redirect
+        window.open(waUrl, '_blank');
     });
 });
